@@ -1,0 +1,7 @@
+CREATE TABLE Properties (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT NOT NULL,
+    Address TEXT NOT NULL,
+    Price REAL NOT NULL,
+    Description TEXT
+);
