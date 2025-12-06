@@ -20,15 +20,13 @@ namespace AgentApp.Forms
             agentUsername = username;
 
             this.Text = "Agent Dashboard - " + username;
-            this.ClientSize = new Size(600, 400); // wider window
+            this.ClientSize = new Size(600, 400);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
 
-            // Get first name from DB
             string firstName = GetFirstName(username);
 
-           // Welcome label (centered horizontally, no purple background)
             lblWelcome = new Label()
             {
                 Text = $"Welcome, {firstName}!",
@@ -38,7 +36,7 @@ namespace AgentApp.Forms
                 BackColor = Color.Transparent // transparent instead of purple
             };
 
-            // Position will be adjusted after adding controls
+           
             this.Controls.Add(lblWelcome);
             CenterLabelHorizontally(lblWelcome, 30);
 
@@ -145,7 +143,7 @@ namespace AgentApp.Forms
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.Click += (s, e) => this.Close();
 
-            // Add controls
+            
             Controls.Add(btnListings);
             Controls.Add(btnCreateListing);
             Controls.Add(btnDeleteListings);

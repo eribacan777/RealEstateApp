@@ -23,3 +23,4 @@ C:\Ana\RealEstateApp\RealEstateApp.Core\obj\Debug\net9.0\RealEstateApp.Core.dll
 C:\Ana\RealEstateApp\RealEstateApp.Core\obj\Debug\net9.0\refint\RealEstateApp.Core.dll
 C:\Ana\RealEstateApp\RealEstateApp.Core\obj\Debug\net9.0\RealEstateApp.Core.pdb
 C:\Ana\RealEstateApp\RealEstateApp.Core\obj\Debug\net9.0\ref\RealEstateApp.Core.dll
+C:\Ana\RealEstateApp\RealEstateApp.Core\obj\Debug\net9.0\RealEstateApp.Core.sourcelink.json

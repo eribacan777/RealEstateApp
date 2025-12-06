@@ -123,3 +123,4 @@ C:\Ana\RealEstateApp\AgentApp\obj\Debug\net9.0-windows\refint\AgentApp.dll
 C:\Ana\RealEstateApp\AgentApp\obj\Debug\net9.0-windows\AgentApp.pdb
 C:\Ana\RealEstateApp\AgentApp\obj\Debug\net9.0-windows\AgentApp.genruntimeconfig.cache
 C:\Ana\RealEstateApp\AgentApp\obj\Debug\net9.0-windows\ref\AgentApp.dll
+C:\Ana\RealEstateApp\AgentApp\obj\Debug\net9.0-windows\AgentApp.sourcelink.json
