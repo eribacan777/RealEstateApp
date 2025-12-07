@@ -9,11 +9,15 @@ namespace AgentApp.Forms
     public class AgentDashboardForm : Form
     {
         private Button btnListings;
+
+        private Button btnManageRequests;
+
         private Button btnProfile;
         private Button btnLogout;
         private Button btnClose;
         private string agentUsername;
         private Label lblWelcome;
+
 
         public AgentDashboardForm(string username)
         {
@@ -94,6 +98,26 @@ namespace AgentApp.Forms
                 deleteForm.ShowDialog();
             };
 
+
+
+            btnManageRequests = new Button()
+            {
+                Text = "Manage Requests",
+                Location = new Point(220, 330),   // below Logout
+                Size = new Size(160, 40),
+                BackColor = Color.MediumSeaGreen,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 12F, FontStyle.Bold)
+            };
+            btnManageRequests.FlatAppearance.BorderSize = 0;
+            btnManageRequests.Click += (s, e) =>
+            {
+                var requestsForm = new ManageRequestsForm(agentUsername);
+                requestsForm.ShowDialog();
+            };
+
+
             // Profile Management button
             btnProfile = new Button()
             {
@@ -147,6 +171,7 @@ namespace AgentApp.Forms
             Controls.Add(btnListings);
             Controls.Add(btnCreateListing);
             Controls.Add(btnDeleteListings);
+            Controls.Add(btnManageRequests);
             Controls.Add(btnProfile);
             Controls.Add(btnLogout);
             Controls.Add(btnClose);

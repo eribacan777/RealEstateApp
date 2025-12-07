@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "OfRx53dp+lE=",
+  "dgSpecHash": "QmkTcRH+sFA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj",
+  "projectFilePath": "C:\\Ana\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Maria\\.nuget\\packages\\stub.system.data.sqlite.core.netstandard\\1.0.119\\stub.system.data.sqlite.core.netstandard.1.0.119.nupkg.sha512",
-    "C:\\Users\\Maria\\.nuget\\packages\\system.data.sqlite.core\\1.0.119\\system.data.sqlite.core.1.0.119.nupkg.sha512"
+    "C:\\Users\\use\\.nuget\\packages\\stub.system.data.sqlite.core.netstandard\\1.0.119\\stub.system.data.sqlite.core.netstandard.1.0.119.nupkg.sha512",
+    "C:\\Users\\use\\.nuget\\packages\\system.data.sqlite.core\\1.0.119\\system.data.sqlite.core.1.0.119.nupkg.sha512"
   ],
   "logs": []
 }
