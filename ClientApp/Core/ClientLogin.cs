@@ -36,17 +36,18 @@ cmd.Parameters.AddWithValue("@phone", client.PhoneNumber ?? "");
         }
 
         // Validate login credentials
-        public static Client? Validate(string email, string password)
+        // Accept either email or username in the first parameter
+        public static Client? Validate(string emailOrUsername, string password)
         {
             using var conn = RealEstateApp.Core.DatabaseHelper.GetConnection("ClientAccounts.db");
             conn.Open();
 
             var cmd = new SQLiteCommand(@"
-                SELECT Id, FullName, Email, Password, PhoneNumber
+                SELECT Id, Username, FullName, Email, Password, PhoneNumber
                 FROM Clients
-                WHERE Email=@Email AND Password=@Password;", conn);
+                WHERE (Email=@ident OR Username=@ident) AND Password=@Password;", conn);
 
-            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@ident", emailOrUsername);
             cmd.Parameters.AddWithValue("@Password", password);
 
             using var reader = cmd.ExecuteReader();
@@ -55,6 +56,7 @@ cmd.Parameters.AddWithValue("@phone", client.PhoneNumber ?? "");
                 return new Client
                 {
                     Id = reader["Id"].ToString(),
+                    Username = reader["Username"].ToString() ?? string.Empty,
                     FullName = reader["FullName"].ToString()!,
                     Email = reader["Email"].ToString()!,
                     Password = reader["Password"].ToString()!,

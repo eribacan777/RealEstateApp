@@ -34,6 +34,10 @@ namespace ClientApp
             StyleCuteButton(this.favoritesButton, "💖 Favorite Properties", 150);
             StyleCuteButton(this.requestMeetingButton, "📅 Request Meeting", 210);
 
+            // Wire up Click events for the buttons
+            this.viewListingsButton.Click += new System.EventHandler(this.viewListingsButton_Click);
+            this.favoritesButton.Click += new System.EventHandler(this.favoritesButton_Click);
+            this.requestMeetingButton.Click += new System.EventHandler(this.requestMeetingButton_Click);
             // Logout (smaller, still cute)
             this.logoutButton.Text = "🚪 Logout";
             this.logoutButton.Location = new System.Drawing.Point(110, 270);

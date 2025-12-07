@@ -81,19 +81,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\use\\.nuget\\packages\\": {}
+    "C:\\Users\\Maria\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Ana\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj",
+      "projectUniqueName": "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj",
       "projectName": "RealEstateApp.Core",
-      "projectPath": "C:\\Ana\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj",
-      "packagesPath": "C:\\Users\\use\\.nuget\\packages\\",
-      "outputPath": "C:\\Ana\\RealEstateApp\\RealEstateApp.Core\\obj\\",
+      "projectPath": "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj",
+      "packagesPath": "C:\\Users\\Maria\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\RealEstateApp.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\use\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Maria\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -144,7 +144,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

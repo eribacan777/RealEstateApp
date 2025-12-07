@@ -18,15 +18,15 @@ namespace ClientApp
 
         private void viewListingsButton_Click(object sender, EventArgs e)
         {
-            var listingsForm = new ViewListingsForm(); // ✅ no arguments needed
+            var listingsForm = new ViewListingsForm(this.client);
             listingsForm.ShowDialog();
 
         }
 
         private void favoritesButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Here you will see your favorite properties.");
-            // Later: open a FavoritesForm
+            var favForm = new FavoritesForm(this.client);
+            favForm.ShowDialog();
         }
 
       private void requestMeetingButton_Click(object sender, EventArgs e)

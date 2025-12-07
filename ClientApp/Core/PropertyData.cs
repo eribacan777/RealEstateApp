@@ -21,9 +21,10 @@ namespace ClientApp.Core
         {
             Id = Convert.ToInt32(reader["Id"]),
             Name = reader["Title"].ToString()!,
-            Address = reader["Description"].ToString()!, // or another field
+            Address = reader["Description"].ToString()!, // using Description for address/summary if no address column
             Price = (double)Convert.ToDecimal(reader["Price"]),
-            Description = reader["Description"].ToString()!
+            Description = reader["Description"].ToString()!,
+            AgentId = reader["AgentId"] == DBNull.Value ? 0 : Convert.ToInt32(reader["AgentId"])
         });
     }
 
