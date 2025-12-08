@@ -1,5 +1,7 @@
 using System;
+using System.Data.SQLite;
 using System.Windows.Forms;
+using RealEstateApp.Core;
 using ClientApp.Core;
 
 namespace ClientApp.Forms
@@ -8,61 +10,88 @@ namespace ClientApp.Forms
     {
         private Client client;
         private string propertyId;
-        private string agentUsername;
 
         public RequestMeetingForm(Client client, string propertyId = "", string agentUsername = "")
         {
             InitializeComponent();
             this.client = client;
             this.propertyId = propertyId;
-            this.agentUsername = agentUsername ?? string.Empty;
+
             nameLabel.Text = $"Client: {client.FullName}";
+
+            LoadAgents();
+
+            // If developer passed an agent username, pre-select it
+            if (!string.IsNullOrEmpty(agentUsername))
+            {
+                agentComboBox.SelectedItem = agentUsername;
+            }
+        }
+
+        private void LoadAgents()
+        {
+            try
+            {
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string repoRoot = System.IO.Path.GetFullPath(System.IO.Path.Combine(baseDir, "..\\..\\..\\.."));
+                string dbPath = System.IO.Path.Combine(repoRoot, "Database", "AgentAccounts.db");
+
+                using (var conn = new SQLiteConnection($"Data Source={dbPath}"))
+                {
+                    conn.Open();
+
+                    string query = "SELECT Username FROM Agents";
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            agentComboBox.Items.Add(reader.GetString(0));
+                        }
+                    }
+                }
+
+                if (agentComboBox.Items.Count > 0)
+                    agentComboBox.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading agents: " + ex.Message);
+            }
         }
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            DateTime selectedDate = meetingDatePicker.Value;
-            string message = messageTextBox.Text.Trim();
-
-            if (string.IsNullOrEmpty(message))
+            if (agentComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Please enter a short message or reason for the meeting.");
+                MessageBox.Show("Please select an agent.");
                 return;
             }
 
+            var date = meetingDatePicker.Value;
+            var message = messageTextBox.Text.Trim();
+            var agent = agentComboBox.SelectedItem.ToString();
+
+            var meeting = new MeetingRequest
+            {
+                ClientId = client.Id,
+                ClientName = client.FullName,
+                PropertyId = propertyId,
+                AgentUsername = agent,
+                RequestedDate = date,
+                Message = message
+            };
+
             try
             {
-                // Build a viewing object compatible with AgentApp.Core.Viewing
-                var viewing = new
-                {
-                    ViewingId = Guid.NewGuid().ToString(),
-                    PropertyId = propertyId,
-                    AgentUsername = agentUsername ?? string.Empty,
-                    ClientUsername = client.Username ?? string.Empty,
-                    DateTime = selectedDate,
-                    Status = "Requested",
-                    Feedback = message
-                };
-
-                // Compute AgentApp viewings folder in the repo (same logic as DatabaseHelper uses to find repo root)
-                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                string repoRoot = System.IO.Path.GetFullPath(System.IO.Path.Combine(baseDir, "..\\..\\..\\.."));
-                string viewingsFolder = System.IO.Path.Combine(repoRoot, "AgentApp", "Core", "Data", "Viewings");
-                if (!System.IO.Directory.Exists(viewingsFolder))
-                    System.IO.Directory.CreateDirectory(viewingsFolder);
-
-                string filePath = System.IO.Path.Combine(viewingsFolder, viewing.ViewingId + ".json");
-                var json = System.Text.Json.JsonSerializer.Serialize(viewing, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                System.IO.File.WriteAllText(filePath, json);
-
-                MessageBox.Show($"Meeting requested for {selectedDate:G}.\nMessage: {message}", "Request Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MeetingRequestRepository.Save(meeting);
+                MessageBox.Show("Meeting request sent successfully!");
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error saving request: " + ex.Message);
+                MessageBox.Show("Error saving meeting request: " + ex.Message);
             }
-
-            this.Close();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
