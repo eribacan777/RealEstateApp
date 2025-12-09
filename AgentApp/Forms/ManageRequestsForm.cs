@@ -3,7 +3,6 @@ using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace AgentApp.Forms
 {
@@ -34,7 +33,8 @@ namespace AgentApp.Forms
                 FullRowSelect = true,
                 GridLines = true,
                 Location = new Point(20, 20),
-                Size = new Size(650, 250)
+                Size = new Size(650, 250),
+                BackColor = Color.White // keep list readable
             };
 
             listView.Columns.Add("ViewingId", 120);
@@ -48,7 +48,8 @@ namespace AgentApp.Forms
             {
                 Text = "✅ Accept",
                 Location = new Point(20, 300),
-                Size = new Size(100, 40)
+                Size = new Size(100, 40),
+                BackColor = Color.LightGreen
             };
             btnAccept.Click += BtnAccept_Click;
 
@@ -56,7 +57,8 @@ namespace AgentApp.Forms
             {
                 Text = "❌ Decline",
                 Location = new Point(140, 300),
-                Size = new Size(100, 40)
+                Size = new Size(100, 40),
+                BackColor = Color.LightCoral
             };
             btnDecline.Click += BtnDecline_Click;
 
@@ -64,7 +66,8 @@ namespace AgentApp.Forms
             {
                 Text = "Close",
                 Location = new Point(260, 300),
-                Size = new Size(100, 40)
+                Size = new Size(100, 40),
+                BackColor = Color.LightGray
             };
             btnClose.Click += (s, e) => this.Close();
 
@@ -74,6 +77,18 @@ namespace AgentApp.Forms
             Controls.Add(btnClose);
 
             LoadRequests();
+        }
+
+        // 🎨 Gradient background
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            var rect = this.ClientRectangle;
+            using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                rect, Color.MediumPurple, Color.DeepPink, 45F))
+            {
+                e.Graphics.FillRectangle(brush, rect);
+            }
+            base.OnPaint(e);
         }
 
         private void LoadRequests()

@@ -9,15 +9,12 @@ namespace AgentApp.Forms
     public class AgentDashboardForm : Form
     {
         private Button btnListings;
-
         private Button btnManageRequests;
-
         private Button btnProfile;
         private Button btnLogout;
         private Button btnClose;
         private string agentUsername;
         private Label lblWelcome;
-
 
         public AgentDashboardForm(string username)
         {
@@ -37,10 +34,8 @@ namespace AgentApp.Forms
                 AutoSize = true,
                 Font = new Font("Segoe UI", 16F, FontStyle.Bold),
                 ForeColor = Color.White,
-                BackColor = Color.Transparent // transparent instead of purple
+                BackColor = Color.Transparent
             };
-
-           
             this.Controls.Add(lblWelcome);
             CenterLabelHorizontally(lblWelcome, 30);
 
@@ -98,14 +93,13 @@ namespace AgentApp.Forms
                 deleteForm.ShowDialog();
             };
 
-
-
+            // Manage Requests button (moved before Profile)
             btnManageRequests = new Button()
             {
                 Text = "Manage Requests",
-                Location = new Point(220, 330),   // below Logout
+                Location = new Point(220, 230),
                 Size = new Size(160, 40),
-                BackColor = Color.MediumSeaGreen,
+                BackColor = Color.MediumOrchid, // matches purple/pink theme
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 12F, FontStyle.Bold)
@@ -117,12 +111,11 @@ namespace AgentApp.Forms
                 requestsForm.ShowDialog();
             };
 
-
-            // Profile Management button
+            // Profile Management button (shifted down)
             btnProfile = new Button()
             {
                 Text = "Profile Management",
-                Location = new Point(220, 230),
+                Location = new Point(220, 280),
                 Size = new Size(160, 40),
                 BackColor = Color.DeepPink,
                 ForeColor = Color.White,
@@ -136,11 +129,11 @@ namespace AgentApp.Forms
                 profileForm.ShowDialog();
             };
 
-            // Logout button
+            // Logout button (shifted down)
             btnLogout = new Button()
             {
                 Text = "Logout",
-                Location = new Point(220, 280),
+                Location = new Point(220, 330),
                 Size = new Size(160, 40),
                 BackColor = Color.DarkRed,
                 ForeColor = Color.White,
@@ -153,7 +146,7 @@ namespace AgentApp.Forms
                 this.Close();
             };
 
-            // Close button
+            // Close button (top right)
             btnClose = new Button()
             {
                 Text = "X",
@@ -167,7 +160,6 @@ namespace AgentApp.Forms
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.Click += (s, e) => this.Close();
 
-            
             Controls.Add(btnListings);
             Controls.Add(btnCreateListing);
             Controls.Add(btnDeleteListings);
@@ -176,7 +168,6 @@ namespace AgentApp.Forms
             Controls.Add(btnLogout);
             Controls.Add(btnClose);
 
-            // Re-center welcome label after all controls are added
             CenterLabelHorizontally(lblWelcome, 30);
         }
 
@@ -194,12 +185,12 @@ namespace AgentApp.Forms
                 if (!string.IsNullOrEmpty(fullName))
                 {
                     var parts = fullName.Split(' ');
-                    return parts[0]; // first word = first name
+                    return parts[0];
                 }
             }
             catch
             {
-                // fallback to username if DB fails
+                // fallback
             }
             return username;
         }
@@ -209,6 +200,7 @@ namespace AgentApp.Forms
             lbl.Location = new Point((this.ClientSize.Width - lbl.Width) / 2, y);
         }
 
+        // 🎨 Gradient background
         protected override void OnPaint(PaintEventArgs e)
         {
             var rect = this.ClientRectangle;
