@@ -446,19 +446,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Maria\\.nuget\\packages\\": {}
+    "C:\\Users\\use\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\ClientApp\\ClientApp.csproj",
+      "projectUniqueName": "C:\\Ana\\RealEstateApp\\ClientApp\\ClientApp.csproj",
       "projectName": "ClientApp",
-      "projectPath": "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\ClientApp\\ClientApp.csproj",
-      "packagesPath": "C:\\Users\\Maria\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\ClientApp\\obj\\",
+      "projectPath": "C:\\Ana\\RealEstateApp\\ClientApp\\ClientApp.csproj",
+      "packagesPath": "C:\\Users\\use\\.nuget\\packages\\",
+      "outputPath": "C:\\Ana\\RealEstateApp\\ClientApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Maria\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\use\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0-windows"
@@ -470,8 +470,8 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "projectReferences": {
-            "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj": {
-              "projectPath": "C:\\Users\\Maria\\Documents\\GitHub\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj"
+            "C:\\Ana\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj": {
+              "projectPath": "C:\\Ana\\RealEstateApp\\RealEstateApp.Core\\RealEstateApp.Core.csproj"
             }
           }
         }
@@ -524,7 +524,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
