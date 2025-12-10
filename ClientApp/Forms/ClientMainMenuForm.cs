@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using ClientApp.Core;
 
 namespace ClientApp.Forms
 {
@@ -9,19 +10,23 @@ namespace ClientApp.Forms
     {
         private Button btnLogin;
         private Button btnCreateAccount;
+        private Button btnAccountDetails;
         private Button btnBack;
         private Label titleLabel;
-        private Form previousForm;
 
-        public ClientMainMenuForm(Form previousForm)
+        private Form previousForm;
+        private Client currentClient; // ⭐ Added
+
+        public ClientMainMenuForm(Form previousForm, Client currentClient = null)
         {
             this.previousForm = previousForm;
+            this.currentClient = currentClient;
 
             // 🌸 Form Setup
             this.Text = "Client Menu 💖";
-            this.ClientSize = new Size(420, 420);
+            this.ClientSize = new Size(420, 480);
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.FromArgb(255, 235, 245); // soft pink
+            this.BackColor = Color.FromArgb(255, 235, 245);
 
             // 🌸 Title Label
             titleLabel = new Label()
@@ -36,12 +41,15 @@ namespace ClientApp.Forms
             };
             Controls.Add(titleLabel);
 
-            // 🌸 Rounded Cute Buttons
+            // 🌸 Menu Buttons
             btnLogin = CreateCuteButton("💗 Login", new Point(120, 120));
             btnCreateAccount = CreateCuteButton("🌸 Create Account", new Point(120, 190));
-            btnBack = CreateSmallCuteButton("⬅ Back", new Point(120, 260));
+            btnAccountDetails = CreateCuteButton("💎 Account Details", new Point(120, 260));
+            btnBack = CreateSmallCuteButton("⬅ Back", new Point(120, 330));
 
-            // Navigation Logic
+            // 🌸 Navigation Logic
+
+            // Login
             btnLogin.Click += (s, e) =>
             {
                 this.Hide();
@@ -50,12 +58,28 @@ namespace ClientApp.Forms
                 loginForm.Show();
             };
 
+            // Create Account
             btnCreateAccount.Click += (s, e) =>
             {
                 var createForm = new CreateAccountForm();
                 createForm.ShowDialog();
             };
 
+            // ⭐ NEW — Open Account Details
+            btnAccountDetails.Click += (s, e) =>
+            {
+                if (currentClient == null)
+                {
+                    MessageBox.Show("You must log in first!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var detailsForm = new AccountDetailsForm(currentClient);
+                detailsForm.ShowDialog();
+            };
+
+            // Back
             btnBack.Click += (s, e) =>
             {
                 this.Hide();
@@ -64,6 +88,7 @@ namespace ClientApp.Forms
 
             Controls.Add(btnLogin);
             Controls.Add(btnCreateAccount);
+            Controls.Add(btnAccountDetails);
             Controls.Add(btnBack);
         }
 
@@ -75,7 +100,7 @@ namespace ClientApp.Forms
                 Text = text,
                 Location = location,
                 Size = new Size(180, 50),
-                BackColor = Color.FromArgb(255, 182, 210), // darker pastel pink
+                BackColor = Color.FromArgb(255, 182, 210),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 12, FontStyle.Bold)
@@ -87,7 +112,7 @@ namespace ClientApp.Forms
             return btn;
         }
 
-        // 🌸 Smaller cute button for "Back"
+        // 🌸 Small cute button
         private Button CreateSmallCuteButton(string text, Point location)
         {
             Button btn = new Button()

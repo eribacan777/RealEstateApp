@@ -24,106 +24,112 @@ namespace ClientApp.Forms
         }
 
         private void InitializeComponent()
-        {
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.agentLabel = new System.Windows.Forms.Label();
-            this.agentComboBox = new System.Windows.Forms.ComboBox();
-            this.dateLabel = new System.Windows.Forms.Label();
-            this.meetingDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.messageLabel = new System.Windows.Forms.Label();
-            this.messageTextBox = new System.Windows.Forms.TextBox();
-            this.submitButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+{
+    this.nameLabel = new System.Windows.Forms.Label();
+    this.agentLabel = new System.Windows.Forms.Label();
+    this.agentComboBox = new System.Windows.Forms.ComboBox();
+    this.dateLabel = new System.Windows.Forms.Label();
+    this.meetingDatePicker = new System.Windows.Forms.DateTimePicker();
+    this.messageLabel = new System.Windows.Forms.Label();
+    this.messageTextBox = new System.Windows.Forms.TextBox();
+    this.submitButton = new System.Windows.Forms.Button();
+    this.cancelButton = new System.Windows.Forms.Button();
+    this.SuspendLayout();
 
-            // nameLabel
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.nameLabel.Location = new System.Drawing.Point(20, 15);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(135, 19);
-            this.nameLabel.Text = "Client: Placeholder";
+    // --- Form Styling ---
+    this.BackColor = Color.FromArgb(255, 240, 245); // light pink blush
+    this.Font = new Font("Segoe UI", 10F);
 
-            // agentLabel
-            this.agentLabel.AutoSize = true;
-            this.agentLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.agentLabel.Location = new System.Drawing.Point(20, 55);
-            this.agentLabel.Name = "agentLabel";
-            this.agentLabel.Size = new System.Drawing.Size(49, 19);
-            this.agentLabel.Text = "Agent:";
+    // nameLabel
+    this.nameLabel.AutoSize = true;
+    this.nameLabel.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+    this.nameLabel.ForeColor = Color.FromArgb(180, 60, 120);
+    this.nameLabel.Location = new Point(20, 15);
+    this.nameLabel.Text = "Client: Placeholder";
 
-            // agentComboBox
-            this.agentComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.agentComboBox.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.agentComboBox.Location = new System.Drawing.Point(90, 52);
-            this.agentComboBox.Name = "agentComboBox";
-            this.agentComboBox.Size = new System.Drawing.Size(200, 25);
+    // agentLabel
+    this.agentLabel.AutoSize = true;
+    this.agentLabel.Location = new Point(20, 55);
+    this.agentLabel.ForeColor = Color.FromArgb(150, 70, 110);
+    this.agentLabel.Text = "Agent:";
 
-            // dateLabel
-            this.dateLabel.AutoSize = true;
-            this.dateLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dateLabel.Location = new System.Drawing.Point(20, 100);
-            this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(113, 19);
-            this.dateLabel.Text = "Choose a date:";
+    // agentComboBox
+    this.agentComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+    this.agentComboBox.Font = new Font("Segoe UI", 10F);
+    this.agentComboBox.Location = new Point(90, 52);
+    this.agentComboBox.Size = new Size(200, 25);
+    this.agentComboBox.BackColor = Color.FromArgb(255, 230, 240);
 
-            // meetingDatePicker
-            this.meetingDatePicker.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.meetingDatePicker.Location = new System.Drawing.Point(150, 95);
-            this.meetingDatePicker.Name = "meetingDatePicker";
-            this.meetingDatePicker.Size = new System.Drawing.Size(200, 25);
+    // dateLabel
+    this.dateLabel.AutoSize = true;
+    this.dateLabel.Location = new Point(20, 100);
+    this.dateLabel.ForeColor = Color.FromArgb(150, 70, 110);
+    this.dateLabel.Text = "Choose a date:";
 
-            // messageLabel
-            this.messageLabel.AutoSize = true;
-            this.messageLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.messageLabel.Location = new System.Drawing.Point(20, 145);
-            this.messageLabel.Name = "messageLabel";
-            this.messageLabel.Size = new System.Drawing.Size(70, 19);
-            this.messageLabel.Text = "Message:";
+    // meetingDatePicker
+    this.meetingDatePicker.Font = new Font("Segoe UI", 10F);
+    this.meetingDatePicker.Location = new Point(150, 95);
+    this.meetingDatePicker.Size = new Size(200, 25);
+    this.meetingDatePicker.CalendarMonthBackground = Color.FromArgb(255, 230, 240);
 
-            // messageTextBox
-            this.messageTextBox.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.messageTextBox.Location = new System.Drawing.Point(20, 170);
-            this.messageTextBox.Multiline = true;
-            this.messageTextBox.Name = "messageTextBox";
-            this.messageTextBox.Size = new System.Drawing.Size(330, 120);
+    // messageLabel
+    this.messageLabel.AutoSize = true;
+    this.messageLabel.Location = new Point(20, 145);
+    this.messageLabel.ForeColor = Color.FromArgb(150, 70, 110);
+    this.messageLabel.Text = "Message:";
 
-            // submitButton
-            this.submitButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.submitButton.Location = new System.Drawing.Point(190, 310);
-            this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(75, 30);
-            this.submitButton.Text = "Submit";
-            this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
+    // messageTextBox
+    this.messageTextBox.Font = new Font("Segoe UI", 10F);
+    this.messageTextBox.Location = new Point(20, 170);
+    this.messageTextBox.Multiline = true;
+    this.messageTextBox.Size = new Size(330, 120);
+    this.messageTextBox.BackColor = Color.FromArgb(255, 225, 235);
+    this.messageTextBox.BorderStyle = BorderStyle.FixedSingle;
 
-            // cancelButton
-            this.cancelButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cancelButton.Location = new System.Drawing.Point(275, 310);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 30);
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+    // submitButton
+    this.submitButton.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+    this.submitButton.Location = new Point(190, 310);
+    this.submitButton.Size = new Size(75, 30);
+    this.submitButton.Text = "Submit";
+    this.submitButton.BackColor = Color.FromArgb(255, 182, 193); // baby pink
+    this.submitButton.FlatStyle = FlatStyle.Flat;
+    this.submitButton.FlatAppearance.BorderSize = 0;
+    this.submitButton.ForeColor = Color.White;
+    this.submitButton.Cursor = Cursors.Hand;
+    this.submitButton.Click += new EventHandler(this.submitButton_Click);
 
-            // RequestMeetingForm
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(380, 360);
-            this.Controls.Add(this.nameLabel);
-            this.Controls.Add(this.agentLabel);
-            this.Controls.Add(this.agentComboBox);
-            this.Controls.Add(this.dateLabel);
-            this.Controls.Add(this.meetingDatePicker);
-            this.Controls.Add(this.messageLabel);
-            this.Controls.Add(this.messageTextBox);
-            this.Controls.Add(this.submitButton);
-            this.Controls.Add(this.cancelButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "RequestMeetingForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Request Meeting";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-        }
+    // cancelButton
+    this.cancelButton.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+    this.cancelButton.Location = new Point(275, 310);
+    this.cancelButton.Size = new Size(75, 30);
+    this.cancelButton.Text = "Cancel";
+    this.cancelButton.BackColor = Color.FromArgb(255, 192, 203);
+    this.cancelButton.FlatStyle = FlatStyle.Flat;
+    this.cancelButton.FlatAppearance.BorderSize = 0;
+    this.cancelButton.ForeColor = Color.White;
+    this.cancelButton.Cursor = Cursors.Hand;
+    this.cancelButton.Click += new EventHandler(this.cancelButton_Click);
+
+    // RequestMeetingForm
+    this.AutoScaleDimensions = new SizeF(7F, 15F);
+    this.AutoScaleMode = AutoScaleMode.Font;
+    this.ClientSize = new Size(380, 360);
+    this.Controls.Add(this.nameLabel);
+    this.Controls.Add(this.agentLabel);
+    this.Controls.Add(this.agentComboBox);
+    this.Controls.Add(this.dateLabel);
+    this.Controls.Add(this.meetingDatePicker);
+    this.Controls.Add(this.messageLabel);
+    this.Controls.Add(this.messageTextBox);
+    this.Controls.Add(this.submitButton);
+    this.Controls.Add(this.cancelButton);
+    this.FormBorderStyle = FormBorderStyle.FixedDialog;
+    this.StartPosition = FormStartPosition.CenterParent;
+    this.Text = "Request Meeting";
+    this.ResumeLayout(false);
+    this.PerformLayout();
+}
+
     }
 }
 

@@ -20,31 +20,42 @@ namespace ClientApp.Forms
         }
 
         private void InitializeComponent()
-        {
-            this.favoritesPanel = new Panel();
-            this.backButton = new Button();
+{
+    this.favoritesPanel = new Panel();
+    this.backButton = new Button();
 
-            // favoritesPanel
-            this.favoritesPanel.Name = "favoritesPanel";
-            this.favoritesPanel.Dock = DockStyle.Fill;
-            this.favoritesPanel.AutoScroll = true;
+    // 🌸 Form background
+    this.BackColor = Color.FromArgb(255, 240, 245); // soft pastel baby pink
 
-            // backButton
-            this.backButton.Text = "Back";
-            this.backButton.Size = new Size(80, 30);
-            this.backButton.Location = new Point(10, 10);
-            this.backButton.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-            this.backButton.Click += new EventHandler(this.backButton_Click);
+    // 🌸 favoritesPanel
+    this.favoritesPanel.Name = "favoritesPanel";
+    this.favoritesPanel.Dock = DockStyle.Fill;
+    this.favoritesPanel.AutoScroll = true;
+    this.favoritesPanel.BackColor = Color.FromArgb(255, 228, 236); // lighter pink panel
+    this.favoritesPanel.Padding = new Padding(10);
 
-            // Form
-            this.ClientSize = new Size(500, 450);
-            this.Text = "Favorite Properties";
-            this.StartPosition = FormStartPosition.CenterParent;
+    // 🌸 backButton
+    this.backButton.Text = "⬅ Back";
+    this.backButton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+    this.backButton.Size = new Size(90, 35);
+    this.backButton.Location = new Point(10, 10);
+    this.backButton.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+    this.backButton.BackColor = Color.FromArgb(255, 182, 193); // medium pastel pink
+    this.backButton.ForeColor = Color.White;
+    this.backButton.FlatStyle = FlatStyle.Flat;
+    this.backButton.FlatAppearance.BorderSize = 0;
+    this.backButton.Cursor = Cursors.Hand;
+    this.backButton.Click += new EventHandler(this.backButton_Click);
 
-            // Add controls
-            this.Controls.Add(this.favoritesPanel);
-            this.Controls.Add(this.backButton);
-        }
+    // 🌸 Form
+    this.ClientSize = new Size(500, 450);
+    this.Text = "Favorite Properties";
+    this.StartPosition = FormStartPosition.CenterParent;
+
+    // Add controls
+    this.Controls.Add(this.favoritesPanel);
+    this.Controls.Add(this.backButton);
+}
 
         private void LoadFavorites()
         {

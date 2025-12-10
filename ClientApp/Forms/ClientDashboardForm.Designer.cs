@@ -7,6 +7,8 @@ namespace ClientApp
         private System.Windows.Forms.Button viewListingsButton;
         private System.Windows.Forms.Button favoritesButton;
         private System.Windows.Forms.Button requestMeetingButton;
+
+         private System.Windows.Forms.Button viewAccountButton;
         private System.Windows.Forms.Button logoutButton;
 
         private void InitializeComponent()
@@ -15,6 +17,7 @@ namespace ClientApp
             this.viewListingsButton = new System.Windows.Forms.Button();
             this.favoritesButton = new System.Windows.Forms.Button();
             this.requestMeetingButton = new System.Windows.Forms.Button();
+            this.viewAccountButton = new System.Windows.Forms.Button();
             this.logoutButton = new System.Windows.Forms.Button();
 
             this.SuspendLayout();
@@ -33,11 +36,14 @@ namespace ClientApp
             StyleCuteButton(this.viewListingsButton, "🏡 View Listings", 90);
             StyleCuteButton(this.favoritesButton, "💖 Favorite Properties", 150);
             StyleCuteButton(this.requestMeetingButton, "📅 Request Meeting", 210);
+            StyleCuteButton(this.viewAccountButton, "🏡 View Account Details", 270);
 
             // Wire up Click events for the buttons
             this.viewListingsButton.Click += new System.EventHandler(this.viewListingsButton_Click);
             this.favoritesButton.Click += new System.EventHandler(this.favoritesButton_Click);
             this.requestMeetingButton.Click += new System.EventHandler(this.requestMeetingButton_Click);
+            this.viewAccountButton.Click += new System.EventHandler(this.viewAccountButton_Click);
+            
             // Logout (smaller, still cute)
             this.logoutButton.Text = "🚪 Logout";
             this.logoutButton.Location = new System.Drawing.Point(110, 270);
@@ -58,6 +64,7 @@ namespace ClientApp
             this.Controls.Add(this.viewListingsButton);
             this.Controls.Add(this.favoritesButton);
             this.Controls.Add(this.requestMeetingButton);
+            this.Controls.Add(this.viewAccountButton);
             this.Controls.Add(this.logoutButton);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Client Dashboard";

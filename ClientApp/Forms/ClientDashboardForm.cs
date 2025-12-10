@@ -42,5 +42,12 @@ namespace ClientApp
             loginForm.Show();
             this.Hide();
         }
+
+        private void viewAccountButton_Click(object sender, EventArgs e)
+{
+    var accountForm = new AccountDetailsForm(this.client);
+    accountForm.ShowDialog();
+}
+
     }
 }
