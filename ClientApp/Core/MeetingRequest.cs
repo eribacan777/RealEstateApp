@@ -11,5 +11,8 @@ namespace ClientApp.Core
         public string PropertyId { get; set; }
         public DateTime RequestedDate { get; set; }
         public string Message { get; set; }
+
+        public string Status { get; set; } = "Requested";
+
     }
 }

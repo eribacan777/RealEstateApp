@@ -1,8 +1,8 @@
 using System;
-using System.IO;
+using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
-using System.Text.Json;
 
 namespace AgentApp.Forms
 {
@@ -13,7 +13,6 @@ namespace AgentApp.Forms
         private Button btnDecline;
         private Button btnClose;
         private string agentUsername;
-        private string viewingsFolder;
 
         public ManageRequestsForm(string username)
         {
@@ -23,10 +22,6 @@ namespace AgentApp.Forms
             this.ClientSize = new Size(700, 400);
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string repoRoot = Path.GetFullPath(Path.Combine(baseDir, "..\\..\\..\\.."));
-            viewingsFolder = Path.Combine(repoRoot, "AgentApp", "Core", "Data", "Viewings");
-
             listView = new ListView()
             {
                 View = View.Details,
@@ -34,13 +29,13 @@ namespace AgentApp.Forms
                 GridLines = true,
                 Location = new Point(20, 20),
                 Size = new Size(650, 250),
-                BackColor = Color.White // keep list readable
+                BackColor = Color.White
             };
 
-            listView.Columns.Add("ViewingId", 120);
-            listView.Columns.Add("PropertyId", 120);
-            listView.Columns.Add("Client", 150);
-            listView.Columns.Add("DateTime", 150);
+            listView.Columns.Add("Id", 60);
+            listView.Columns.Add("PropertyId", 100);
+            listView.Columns.Add("ClientName", 150);
+            listView.Columns.Add("RequestedDate", 150);
             listView.Columns.Add("Status", 100);
             listView.Columns.Add("Message", 200);
 
@@ -76,10 +71,11 @@ namespace AgentApp.Forms
             Controls.Add(btnDecline);
             Controls.Add(btnClose);
 
+            // ✅ Ensure Status column exists before loading
+            EnsureStatusColumnExists();
             LoadRequests();
         }
 
-        // 🎨 Gradient background
         protected override void OnPaint(PaintEventArgs e)
         {
             var rect = this.ClientRectangle;
@@ -91,34 +87,78 @@ namespace AgentApp.Forms
             base.OnPaint(e);
         }
 
+        // ✅ Migration helper: adds Status column if missing
+        private void EnsureStatusColumnExists()
+        {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string repoRoot = Path.GetFullPath(Path.Combine(baseDir, "..\\..\\..\\.."));
+            string dbPath = Path.Combine(repoRoot, "Database", "MeetingRequests.db");
+
+            using var conn = new SQLiteConnection($"Data Source={dbPath}");
+            conn.Open();
+
+            using var checkCmd = new SQLiteCommand("PRAGMA table_info(MeetingRequests);", conn);
+            using var reader = checkCmd.ExecuteReader();
+            bool hasStatus = false;
+            while (reader.Read())
+            {
+                if (reader["name"].ToString() == "Status")
+                {
+                    hasStatus = true;
+                    break;
+                }
+            }
+
+            if (!hasStatus)
+            {
+                using var alterCmd = new SQLiteCommand(
+                    "ALTER TABLE MeetingRequests ADD COLUMN Status TEXT DEFAULT 'Requested';", conn);
+                alterCmd.ExecuteNonQuery();
+            }
+        }
+
         private void LoadRequests()
         {
             listView.Items.Clear();
 
-            if (!Directory.Exists(viewingsFolder)) return;
-
-            foreach (var file in Directory.GetFiles(viewingsFolder, "*.json"))
+            try
             {
-                try
-                {
-                    var json = File.ReadAllText(file);
-                    var viewing = JsonSerializer.Deserialize<Viewing>(json);
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string repoRoot = Path.GetFullPath(Path.Combine(baseDir, "..\\..\\..\\.."));
+                string dbPath = Path.Combine(repoRoot, "Database", "MeetingRequests.db");
 
-                    if (viewing != null && viewing.AgentUsername == agentUsername)
-                    {
-                        var item = new ListViewItem(viewing.ViewingId);
-                        item.SubItems.Add(viewing.PropertyId);
-                        item.SubItems.Add(viewing.ClientUsername);
-                        item.SubItems.Add(viewing.DateTime.ToString("dd MMM yyyy - HH:mm"));
-                        item.SubItems.Add(viewing.Status);
-                        item.SubItems.Add(viewing.Feedback);
-                        listView.Items.Add(item);
-                    }
-                }
-                catch
+                using var conn = new SQLiteConnection($"Data Source={dbPath}");
+                conn.Open();
+
+                string query = @"
+                    SELECT Id, PropertyId, ClientName, RequestedDate, Status, Message
+                    FROM MeetingRequests
+                    WHERE AgentUsername = @agent";
+
+                using var cmd = new SQLiteCommand(query, conn);
+                cmd.Parameters.AddWithValue("@agent", agentUsername);
+
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    // skip malformed files
+                    var item = new ListViewItem(reader["Id"].ToString());
+                    item.SubItems.Add(reader["PropertyId"].ToString());
+                    item.SubItems.Add(reader["ClientName"].ToString());
+
+                    if (DateTime.TryParse(reader["RequestedDate"].ToString(), out DateTime dt))
+                        item.SubItems.Add(dt.ToString("dd MMM yyyy - HH:mm"));
+                    else
+                        item.SubItems.Add("Invalid Date");
+
+                    item.SubItems.Add(reader["Status"].ToString());
+                    item.SubItems.Add(reader["Message"].ToString());
+
+                    listView.Items.Add(item);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading requests:\n" + ex.Message);
             }
         }
 
@@ -140,41 +180,30 @@ namespace AgentApp.Forms
                 return;
             }
 
-            string viewingId = listView.SelectedItems[0].Text;
-            string filePath = Path.Combine(viewingsFolder, viewingId + ".json");
-
-            if (!File.Exists(filePath)) return;
+            string requestId = listView.SelectedItems[0].Text;
 
             try
             {
-                var json = File.ReadAllText(filePath);
-                var viewing = JsonSerializer.Deserialize<Viewing>(json);
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string repoRoot = Path.GetFullPath(Path.Combine(baseDir, "..\\..\\..\\.."));
+                string dbPath = Path.Combine(repoRoot, "Database", "MeetingRequests.db");
 
-                if (viewing != null)
-                {
-                    viewing.Status = newStatus;
-                    var updatedJson = JsonSerializer.Serialize(viewing, new JsonSerializerOptions { WriteIndented = true });
-                    File.WriteAllText(filePath, updatedJson);
+                using var conn = new SQLiteConnection($"Data Source={dbPath}");
+                conn.Open();
 
-                    MessageBox.Show($"Request {newStatus}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadRequests();
-                }
+                string updateQuery = "UPDATE MeetingRequests SET Status = @status WHERE Id = @id";
+                using var cmd = new SQLiteCommand(updateQuery, conn);
+                cmd.Parameters.AddWithValue("@status", newStatus);
+                cmd.Parameters.AddWithValue("@id", requestId);
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show($"Request {newStatus}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadRequests();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error updating request:\n" + ex.Message);
             }
-        }
-
-        private class Viewing
-        {
-            public string ViewingId { get; set; } = "";
-            public string PropertyId { get; set; } = "";
-            public string AgentUsername { get; set; } = "";
-            public string ClientUsername { get; set; } = "";
-            public DateTime DateTime { get; set; }
-            public string Status { get; set; } = "";
-            public string Feedback { get; set; } = "";
         }
     }
 }
