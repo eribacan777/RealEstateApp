@@ -8,8 +8,8 @@ namespace AgentApp.Forms
 {
     public class AgentDashboardForm : Form
     {
-        private Button btnListings;
-        private Button btnManageRequests;
+        private Button btnManageListings;
+        private Button btnManageMeetings;
         private Button btnProfile;
         private Button btnLogout;
         private Button btnClose;
@@ -21,7 +21,7 @@ namespace AgentApp.Forms
             agentUsername = username;
 
             this.Text = "Agent Dashboard - " + username;
-            this.ClientSize = new Size(600, 400);
+            this.ClientSize = new Size(600, 450);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
@@ -32,91 +32,67 @@ namespace AgentApp.Forms
             {
                 Text = $"Welcome, {firstName}!",
                 AutoSize = true,
-                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
+                Font = new Font("Segoe UI", 18F, FontStyle.Bold),
                 ForeColor = Color.White,
                 BackColor = Color.Transparent
             };
             this.Controls.Add(lblWelcome);
-            CenterLabelHorizontally(lblWelcome, 30);
+            CenterLabelHorizontally(lblWelcome, 40);
 
-            // View Listings button
-            btnListings = new Button()
-            {
-                Text = "View Listings",
-                Location = new Point(220, 80),
-                Size = new Size(160, 40),
-                BackColor = Color.DeepPink,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 12F, FontStyle.Bold)
-            };
-            btnListings.FlatAppearance.BorderSize = 0;
-            btnListings.Click += (s, e) =>
-            {
-                var listingsForm = new ManageListingsForm(username);
-                listingsForm.ShowDialog();
-            };
+            // Wide buttons
+            int wideX = 180;
+            int wideY = 120;
+            int wideWidth = 240;
+            int wideHeight = 45;
+            int spacing = 60;
 
-            // Create Listing button
-            Button btnCreateListing = new Button()
+            // Smaller buttons (Profile + Logout)
+            int smallWidth = 160;
+            int smallHeight = 40;
+            int smallX = 220;
+
+            btnManageListings = new Button()
             {
-                Text = "Create Listing",
-                Location = new Point(220, 130),
-                Size = new Size(160, 40),
+                Text = "Manage Listings",
+                Location = new Point(wideX, wideY),
+                Size = new Size(wideWidth, wideHeight),
                 BackColor = Color.MediumPurple,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 12F, FontStyle.Bold)
             };
-            btnCreateListing.FlatAppearance.BorderSize = 0;
-            btnCreateListing.Click += (s, e) =>
+            btnManageListings.FlatAppearance.BorderSize = 0;
+            btnManageListings.Click += (s, e) =>
             {
-                var createListingForm = new CreateListingForm(agentUsername);
-                createListingForm.ShowDialog();
+                var listingsForm = new ManageListingsForm(agentUsername);
+                listingsForm.ShowDialog();
             };
 
-            // Delete Listings button
-            Button btnDeleteListings = new Button()
+            btnManageMeetings = new Button()
             {
-                Text = "Delete Listings",
-                Location = new Point(220, 180),
-                Size = new Size(160, 40),
-                BackColor = Color.OrangeRed,
+                Text = "Manage Meetings",
+                Location = new Point(wideX, wideY + spacing),
+                Size = new Size(wideWidth, wideHeight),
+                BackColor = Color.MediumOrchid,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 12F, FontStyle.Bold)
             };
-            btnDeleteListings.FlatAppearance.BorderSize = 0;
-            btnDeleteListings.Click += (s, e) =>
+            btnManageMeetings.FlatAppearance.BorderSize = 0;
+            btnManageMeetings.Click += (s, e) =>
             {
-                var deleteForm = new DeleteListingsForm(agentUsername);
-                deleteForm.ShowDialog();
+                var meetingsForm = new ManageRequestsForm(agentUsername);
+                meetingsForm.ShowDialog();
             };
 
-            // Manage Requests button (moved before Profile)
-            btnManageRequests = new Button()
-            {
-                Text = "Manage Requests",
-                Location = new Point(220, 230),
-                Size = new Size(160, 40),
-                BackColor = Color.MediumOrchid, // matches purple/pink theme
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 12F, FontStyle.Bold)
-            };
-            btnManageRequests.FlatAppearance.BorderSize = 0;
-            btnManageRequests.Click += (s, e) =>
-            {
-                var requestsForm = new ManageRequestsForm(agentUsername);
-                requestsForm.ShowDialog();
-            };
+            // EXTRA SPACE after Manage Meetings
+            int afterMeetingsOffset = spacing + 20;
 
-            // Profile Management button (shifted down)
             btnProfile = new Button()
             {
-                Text = "Profile Management",
-                Location = new Point(220, 280),
-                Size = new Size(160, 40),
+                Text = "Profile",
+                Location = new Point(smallX, wideY + afterMeetingsOffset * 2),
+                Size = new Size(smallWidth, smallHeight),
                 BackColor = Color.DeepPink,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
@@ -125,16 +101,16 @@ namespace AgentApp.Forms
             btnProfile.FlatAppearance.BorderSize = 0;
             btnProfile.Click += (s, e) =>
             {
-                var profileForm = new ProfileManagementForm(username);
+                var profileForm = new ProfileManagementForm(agentUsername);
                 profileForm.ShowDialog();
             };
 
-            // Logout button (shifted down)
+            // LOGOUT DIRECTLY UNDER PROFILE (NO EXTRA SPACE)
             btnLogout = new Button()
             {
                 Text = "Logout",
-                Location = new Point(220, 330),
-                Size = new Size(160, 40),
+                Location = new Point(smallX, wideY + afterMeetingsOffset * 2 + smallHeight + 5),
+                Size = new Size(smallWidth, smallHeight),
                 BackColor = Color.DarkRed,
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
@@ -146,7 +122,6 @@ namespace AgentApp.Forms
                 this.Close();
             };
 
-            // Close button (top right)
             btnClose = new Button()
             {
                 Text = "X",
@@ -160,15 +135,13 @@ namespace AgentApp.Forms
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.Click += (s, e) => this.Close();
 
-            Controls.Add(btnListings);
-            Controls.Add(btnCreateListing);
-            Controls.Add(btnDeleteListings);
-            Controls.Add(btnManageRequests);
+            Controls.Add(btnManageListings);
+            Controls.Add(btnManageMeetings);
             Controls.Add(btnProfile);
             Controls.Add(btnLogout);
             Controls.Add(btnClose);
 
-            CenterLabelHorizontally(lblWelcome, 30);
+            CenterLabelHorizontally(lblWelcome, 40);
         }
 
         private string GetFirstName(string username)
@@ -190,7 +163,6 @@ namespace AgentApp.Forms
             }
             catch
             {
-                // fallback
             }
             return username;
         }
@@ -200,7 +172,6 @@ namespace AgentApp.Forms
             lbl.Location = new Point((this.ClientSize.Width - lbl.Width) / 2, y);
         }
 
-        // 🎨 Gradient background
         protected override void OnPaint(PaintEventArgs e)
         {
             var rect = this.ClientRectangle;

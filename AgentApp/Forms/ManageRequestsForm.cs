@@ -19,7 +19,9 @@ namespace AgentApp.Forms
             agentUsername = username;
 
             this.Text = "Manage Meeting Requests - " + username;
-            this.ClientSize = new Size(700, 400);
+
+            // ⬅️ SLIGHTLY SMALLER WINDOW
+            this.ClientSize = new Size(820, 430);
             this.StartPosition = FormStartPosition.CenterScreen;
 
             listView = new ListView()
@@ -27,8 +29,10 @@ namespace AgentApp.Forms
                 View = View.Details,
                 FullRowSelect = true,
                 GridLines = true,
+
+                // ⬅️ SLIGHTLY SMALLER LISTVIEW
                 Location = new Point(20, 20),
-                Size = new Size(650, 250),
+                Size = new Size(780, 290),
                 BackColor = Color.White
             };
 
@@ -37,13 +41,14 @@ namespace AgentApp.Forms
             listView.Columns.Add("ClientName", 150);
             listView.Columns.Add("RequestedDate", 150);
             listView.Columns.Add("Status", 100);
-            listView.Columns.Add("Message", 200);
+            listView.Columns.Add("Message", 220); // adjusted
 
+            // BUTTONS REPOSITIONED
             btnAccept = new Button()
             {
                 Text = "✅ Accept",
-                Location = new Point(20, 300),
-                Size = new Size(100, 40),
+                Location = new Point(20, 330),
+                Size = new Size(120, 45),
                 BackColor = Color.LightGreen
             };
             btnAccept.Click += BtnAccept_Click;
@@ -51,8 +56,8 @@ namespace AgentApp.Forms
             btnDecline = new Button()
             {
                 Text = "❌ Decline",
-                Location = new Point(140, 300),
-                Size = new Size(100, 40),
+                Location = new Point(160, 330),
+                Size = new Size(120, 45),
                 BackColor = Color.LightCoral
             };
             btnDecline.Click += BtnDecline_Click;
@@ -60,8 +65,8 @@ namespace AgentApp.Forms
             btnClose = new Button()
             {
                 Text = "Close",
-                Location = new Point(260, 300),
-                Size = new Size(100, 40),
+                Location = new Point(300, 330),
+                Size = new Size(120, 45),
                 BackColor = Color.LightGray
             };
             btnClose.Click += (s, e) => this.Close();
@@ -71,7 +76,6 @@ namespace AgentApp.Forms
             Controls.Add(btnDecline);
             Controls.Add(btnClose);
 
-            // ✅ Ensure Status column exists before loading
             EnsureStatusColumnExists();
             LoadRequests();
         }
@@ -87,7 +91,6 @@ namespace AgentApp.Forms
             base.OnPaint(e);
         }
 
-        // ✅ Migration helper: adds Status column if missing
         private void EnsureStatusColumnExists()
         {
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
