@@ -13,7 +13,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RealEstateApp.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< Updated upstream
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1a381829f53b24c822b5dd659ff872884d7fc2a")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7767375e88f1d58d79f427eadec348a1792eba3")]
+>>>>>>> Stashed changes
 [assembly: System.Reflection.AssemblyProductAttribute("RealEstateApp.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RealEstateApp.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
